@@ -13,13 +13,14 @@ numPeople = 10;
 personImage = zeros(size(mpeg_data,1),numPeople);
 for person = 1:numPeople
     data = mpeg_data(:,class_label == person);
-    [PCA_V,projection] = princomp(data', 'econ');
-    reconstruction = PCA_V*projection';
+    %[PCA_V,projection] = princomp(data', 'econ');
+    [PCA_V,projTraining]= pca(data');
+    reconstruction = PCA_V*projTraining';
     diff = data - reconstruction;
     personImage(:,person) = mean(diff,2);
 end
 
-[PCA_V,projTraining,latent]= pca(data);
+
 
 [SbMatrixFLD, SwMatrixFLD, VectorsFLD] = FLD(PCA_V, projTraining);
 %implement FLD and RFLD functions here; defined below
